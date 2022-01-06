@@ -56,6 +56,8 @@ class IseedCommand extends Command
 
         $tables = explode(",", $this->argument('tables'));
         $max = intval($this->option('max'));
+        $max_id = intval($this->option('max_id'));
+        $min_id = intval($this->option('min_id'));
         $chunkSize = intval($this->option('chunksize'));
         $exclude = explode(",", $this->option('exclude'));
         $prerunEvents = explode(",", $this->option('prerun'));
