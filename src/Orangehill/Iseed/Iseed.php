@@ -61,7 +61,7 @@ class Iseed
      * @return bool
      * @throws Orangehill\Iseed\TableNotFoundException
      */
-    public function generateSeed($table, $prefix=null, $suffix=null, $database = null, $max = 0, $chunkSize = 0, $exclude = null, $prerunEvent = null, $postrunEvent = null, $dumpAuto = true, $indexed = true, $orderBy = null, $direction = 'ASC')
+    public function generateSeed($table, $prefix=null, $suffix=null, $database = null, $max = 0, $min_id = 0, $max_id = 0, $chunkSize = 0, $exclude = null, $prerunEvent = null, $postrunEvent = null, $dumpAuto = true, $indexed = true, $orderBy = null, $direction = 'ASC', $isdelete = true)
     {
         if (!$database) {
             $database = config('database.default');
@@ -75,7 +75,7 @@ class Iseed
         }
 
         // Get the data
-        $data = $this->getData($table, $max, $exclude, $orderBy, $direction);
+        $data = $this->getData($table, $max, $max_id, $min_id, $exclude, $orderBy, $direction);
 
         // Repack the data
         $dataArray = $this->repackSeedData($data);
@@ -92,6 +92,8 @@ class Iseed
         // Get a app/database/seeds path
         $seedsPath = $this->getPath($className, $seedPath);
 
+        $delete_stub = $isdelete ? '\DB::table('{{table}}')->delete();' : '';
+
         // Get a populated stub file
         $seedContent = $this->populateStub(
             $className,
@@ -101,7 +103,8 @@ class Iseed
             $chunkSize,
             $prerunEvent,
             $postrunEvent,
-            $indexed
+            $indexed,
+            $delete_stub,
         );
 
         // Save a populated stub
@@ -130,7 +133,7 @@ class Iseed
      * @param  string $table
      * @return Array
      */
-    public function getData($table, $max, $exclude = null, $orderBy = null, $direction = 'ASC')
+    public function getData($table, $max, $max_id, $min_id, $exclude = null, $orderBy = null, $direction = 'ASC')
     {
         $result = \DB::connection($this->databaseName)->table($table);
 
@@ -145,6 +148,14 @@ class Iseed
 
         if ($max) {
             $result = $result->limit($max);
+        }
+
+        if($max_id) {
+            $result = $result->where('id','<', $max_id);
+        }
+
+        if($min_id) {
+            $result = $result->where('id','>=', $min_id);
         }
 
         return $result->get();

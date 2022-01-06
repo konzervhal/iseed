@@ -16,9 +16,9 @@ class {{class}} extends Seeder
     {
         {{prerun_event}}
 
-        \DB::table('{{table}}')->delete();
+        {{delete_stub}}
         {{insert_statements}}
-        
+
         {{postrun_event}}
     }
 }

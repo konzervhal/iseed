@@ -66,6 +66,7 @@ class IseedCommand extends Command
         $direction = $this->option('direction');
         $prefix = $this->option('classnameprefix');
         $suffix = $this->option('classnamesuffix');
+        $isdelete = $this->option('isdelete');
 
         if ($max < 1) {
             $max = null;
@@ -100,6 +101,8 @@ class IseedCommand extends Command
                         $suffix,
                         $this->option('database'),
                         $max,
+                        $max_id,
+                        $min_id,
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
@@ -107,7 +110,8 @@ class IseedCommand extends Command
                         $dumpAuto,
                         $indexed,
                         $orderBy,
-                        $direction
+                        $direction,
+                        $isdelete,
                     ),
                     $table
                 );
@@ -123,12 +127,15 @@ class IseedCommand extends Command
                         $suffix,
                         $this->option('database'),
                         $max,
+                        $max_id,
+                        $min_id,
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
                         $postrunEvent,
                         $dumpAuto,
-                        $indexed
+                        $indexed,
+                        $isdelete,
                     ),
                     $table
                 );
@@ -162,6 +169,8 @@ class IseedCommand extends Command
             array('force', null, InputOption::VALUE_NONE, 'force overwrite of all existing seed classes', null),
             array('database', null, InputOption::VALUE_OPTIONAL, 'database connection', \Config::get('database.default')),
             array('max', null, InputOption::VALUE_OPTIONAL, 'max number of rows', null),
+            array('max_id', null, InputOption::VALUE_OPTIONAL, 'max id in rows', null),
+            array('min_id', null, InputOption::VALUE_OPTIONAL, 'min id in rows', null),
             array('chunksize', null, InputOption::VALUE_OPTIONAL, 'size of data chunks for each insert query', null),
             array('exclude', null, InputOption::VALUE_OPTIONAL, 'exclude columns', null),
             array('prerun', null, InputOption::VALUE_OPTIONAL, 'prerun event name', null),
@@ -172,6 +181,7 @@ class IseedCommand extends Command
             array('direction', null, InputOption::VALUE_OPTIONAL, 'orderby direction', null),
             array('classnameprefix', null, InputOption::VALUE_OPTIONAL, 'prefix for class and file name', null),
             array('classnamesuffix', null, InputOption::VALUE_OPTIONAL, 'suffix for class and file name', null),
+            array('isdelete', null, InputOption::VALUE_OPTIONAL, 'delete data before insert', null),
         );
     }
 
