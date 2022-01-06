@@ -92,7 +92,7 @@ class Iseed
         // Get a app/database/seeds path
         $seedsPath = $this->getPath($className, $seedPath);
 
-        $delete_stub = $isdelete ? '\DB::table('{{table}}')->delete();' : '';
+        $delete_stub = $isdelete ? "\DB::table('{{table}}')->delete();" : "";
 
         // Get a populated stub file
         $seedContent = $this->populateStub(
