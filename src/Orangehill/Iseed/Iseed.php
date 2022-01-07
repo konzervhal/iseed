@@ -140,14 +140,13 @@ class Iseed
             $result = $result->select(array_diff($allColumns, $exclude));
         }
 
-        print $max_id;
         if($max_id) {
             $result = $result->where('id','<', $max_id);
         }
 
-        // if($min_id) {
-        //     $result = $result->where('id','>=', $min_id);
-        // }
+        if($min_id) {
+            $result = $result->where('id','>=', $min_id);
+        }
 
         if($orderBy) {
             $result = $result->orderBy($orderBy, $direction);
@@ -266,9 +265,9 @@ class Iseed
             '{{prerun_event}}', $prerunEventInsert, $stub
         );
 
-        if( $isdelete) {
-            $stub = str_replace('{{delete_data}}', "\DB::table('{{table}}')->delete();", $stub);
-        }
+
+        $stub = str_replace('{{delete_data}}', $isdelete ? "\DB::table('{{table}}')->delete();" : "", $stub);
+
 
         if (!is_null($table)) {
             $stub = str_replace('{{table}}', $table, $stub);
