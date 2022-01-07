@@ -78,8 +78,6 @@ class IseedCommand extends Command
             $chunkSize = null;
         }
 
-        print $this->option('isdelete');
-
         $tableIncrement = 0;
         foreach ($tables as $table) {
             $table = trim($table);
@@ -107,6 +105,7 @@ class IseedCommand extends Command
                         $max,
                         $min_id,
                         $max_id,
+                        $isdelete,
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
@@ -115,7 +114,6 @@ class IseedCommand extends Command
                         $indexed,
                         $orderBy,
                         $direction,
-                        $isdelete,
                     ),
                     $table
                 );
@@ -133,15 +131,13 @@ class IseedCommand extends Command
                         $max,
                         $min_id,
                         $max_id,
+                        $isdelete,
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
                         $postrunEvent,
                         $dumpAuto,
                         $indexed,
-                        $orderBy,
-                        $direction,
-                        $isdelete,
                     ),
                     $table
                 );
@@ -187,7 +183,7 @@ class IseedCommand extends Command
             array('direction', null, InputOption::VALUE_OPTIONAL, 'orderby direction', null),
             array('classnameprefix', null, InputOption::VALUE_OPTIONAL, 'prefix for class and file name', null),
             array('classnamesuffix', null, InputOption::VALUE_OPTIONAL, 'suffix for class and file name', null),
-            array('isdelete', null, InputOption::VALUE_OPTIONAL, 'delete data before insert', null),
+            array('isdelete', null, InputOption::VALUE_NONE, 'delete data before insert', null),
         );
     }
 
