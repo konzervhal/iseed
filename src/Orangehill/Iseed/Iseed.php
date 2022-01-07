@@ -266,7 +266,7 @@ class Iseed
         );
 
 
-        $stub = str_replace('{{delete_data}}', $nodelete ? "\DB::table('{{table}}')->delete();" : "", $stub);
+        $stub = str_replace('{{delete_data}}', $nodelete ? "" : "\DB::table('{{table}}')->delete();", $stub);
 
 
         if (!is_null($table)) {
