@@ -31,7 +31,7 @@ php artisan iseed users --nodelete
 ```
 
 ### min_id / max_id
-Az adott táblában meghatározott minimum vagy maximum `id` értéke, hogy kizárható bizonyos tartomány kizárható legyen.
+Az adott táblában meghatározott minimum és/vagy maximum `id` értéke, hogy bizonyos tartomány kizárható legyen a létrehozandó listából.
 
 pl.: 1000 és 2000 ID közötti userek.
 
@@ -44,7 +44,7 @@ php artisan iseed users --min_id=1000 --max_id=2000
 Mindenkinek meghatározott 1000 db-os ID tartománya van a route_menus és a route táblákban, ezek seederét név szerinti suffix használatával kell létrehozni a következőképp:
 
 ```sh
-php artisan iseed table_menus  --classnamesuffix=Roland --min_id=1000 --max_id=2000 --nodelete
+php artisan iseed table_menus --classnamesuffix=Roland --min_id=1000 --max_id=2000 --nodelete
 ```
 
 Ezután a `DatabaseSeeder.php` fájlban található `run` függvény tartalmát a következőre kell módosítani:
