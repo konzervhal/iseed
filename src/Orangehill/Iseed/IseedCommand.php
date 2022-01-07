@@ -78,6 +78,8 @@ class IseedCommand extends Command
             $chunkSize = null;
         }
 
+        print $this->option('isdelete');
+
         $tableIncrement = 0;
         foreach ($tables as $table) {
             $table = trim($table);
