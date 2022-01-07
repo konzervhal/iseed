@@ -15,6 +15,7 @@ A következő változtatások szükségesek, hogy a zrm-hez készült változtat
         "type": "vcs"
     }
 ],
+```
 
 2.: command - ez letölti innen a gyn gitről a fájlokat. Kérni fogja a git felhasználót + jelszót, ezt igény szerint el is lehet menteni.
 
