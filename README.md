@@ -1,5 +1,3 @@
-**Inverse seed generator (iSeed)** is a Laravel package that provides a method to generate a new seed file based on data from the existing database table.
-
 # GYN
 
 ## Telepítés
@@ -67,6 +65,10 @@ Majd a seeder futtatása:
 ```sh
 php artisan db:seed
 ```
+
+#DEFAULT README
+
+**Inverse seed generator (iSeed)** is a Laravel package that provides a method to generate a new seed file based on data from the existing database table.
 
 ## Installation
 
