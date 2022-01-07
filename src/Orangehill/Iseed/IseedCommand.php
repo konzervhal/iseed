@@ -56,8 +56,8 @@ class IseedCommand extends Command
 
         $tables = explode(",", $this->argument('tables'));
         $max = intval($this->option('max'));
-        $max_id = intval($this->option('max_id'));
         $min_id = intval($this->option('min_id'));
+        $max_id = intval($this->option('max_id'));
         $chunkSize = intval($this->option('chunksize'));
         $exclude = explode(",", $this->option('exclude'));
         $prerunEvents = explode(",", $this->option('prerun'));
@@ -103,8 +103,8 @@ class IseedCommand extends Command
                         $suffix,
                         $this->option('database'),
                         $max,
-                        $max_id,
                         $min_id,
+                        $max_id,
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
@@ -129,8 +129,8 @@ class IseedCommand extends Command
                         $suffix,
                         $this->option('database'),
                         $max,
-                        $max_id,
                         $min_id,
+                        $max_id,
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
@@ -173,8 +173,8 @@ class IseedCommand extends Command
             array('force', null, InputOption::VALUE_NONE, 'force overwrite of all existing seed classes', null),
             array('database', null, InputOption::VALUE_OPTIONAL, 'database connection', \Config::get('database.default')),
             array('max', null, InputOption::VALUE_OPTIONAL, 'max number of rows', null),
-            array('max_id', null, InputOption::VALUE_OPTIONAL, 'max id in rows', null),
             array('min_id', null, InputOption::VALUE_OPTIONAL, 'min id in rows', null),
+            array('max_id', null, InputOption::VALUE_OPTIONAL, 'max id in rows', null),
             array('chunksize', null, InputOption::VALUE_OPTIONAL, 'size of data chunks for each insert query', null),
             array('exclude', null, InputOption::VALUE_OPTIONAL, 'exclude columns', null),
             array('prerun', null, InputOption::VALUE_OPTIONAL, 'prerun event name', null),
