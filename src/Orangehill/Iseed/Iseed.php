@@ -140,13 +140,13 @@ class Iseed
             $result = $result->select(array_diff($allColumns, $exclude));
         }
 
-        if($max_id) {
-            $result = $result->where('id','<', $max_id);
-        }
+        // if($max_id) {
+        //     $result = $result->where('id','<', $max_id);
+        // }
 
-        if($min_id) {
-            $result = $result->where('id','>=', $min_id);
-        }
+        // if($min_id) {
+        //     $result = $result->where('id','>=', $min_id);
+        // }
 
         if($orderBy) {
             $result = $result->orderBy($orderBy, $direction);
