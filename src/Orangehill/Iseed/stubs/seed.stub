@@ -16,7 +16,7 @@ class {{class}} extends Seeder
     {
         {{prerun_event}}
 
-        {{delete_stub}}
+        {{delete_data}}
         {{insert_statements}}
 
         {{postrun_event}}

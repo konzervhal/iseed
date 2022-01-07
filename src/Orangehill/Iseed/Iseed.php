@@ -92,8 +92,6 @@ class Iseed
         // Get a app/database/seeds path
         $seedsPath = $this->getPath($className, $seedPath);
 
-        $delete_stub = $isdelete ? "\DB::table('{{table}}')->delete();" : "";
-
         // Get a populated stub file
         $seedContent = $this->populateStub(
             $className,
@@ -104,7 +102,7 @@ class Iseed
             $prerunEvent,
             $postrunEvent,
             $indexed,
-            $delete_stub,
+            $isdelete,
         );
 
         // Save a populated stub
@@ -231,7 +229,7 @@ class Iseed
      * @param  string   $postunEvent
      * @return string
      */
-    public function populateStub($class, $stub, $table, $data, $chunkSize = null, $prerunEvent = null, $postrunEvent = null, $indexed = true)
+    public function populateStub($class, $stub, $table, $data, $chunkSize = null, $prerunEvent = null, $postrunEvent = null, $indexed = true, $isdelete = true)
     {
         $chunkSize = $chunkSize ?: config('iseed::config.chunk_size');
 
@@ -266,6 +264,10 @@ class Iseed
         $stub = str_replace(
             '{{prerun_event}}', $prerunEventInsert, $stub
         );
+
+        if( $isdelete) {
+            $stub = str_replace('{{delete_data}}', "\DB::table('{{table}}')->delete();", $stub);
+        }
 
         if (!is_null($table)) {
             $stub = str_replace('{{table}}', $table, $stub);
