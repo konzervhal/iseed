@@ -68,7 +68,7 @@ class IseedCommand extends Command
         $direction = $this->option('direction');
         $prefix = $this->option('classnameprefix');
         $suffix = $this->option('classnamesuffix');
-        $isdelete = $this->option('isdelete');
+        $nodelete = $this->option('nodelete');
 
         if ($max < 1) {
             $max = null;
@@ -105,7 +105,7 @@ class IseedCommand extends Command
                         $max,
                         $min_id,
                         $max_id,
-                        $isdelete,
+                        $nodelete,
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
@@ -131,7 +131,7 @@ class IseedCommand extends Command
                         $max,
                         $min_id,
                         $max_id,
-                        $isdelete,
+                        $nodelete,
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
@@ -183,7 +183,7 @@ class IseedCommand extends Command
             array('direction', null, InputOption::VALUE_OPTIONAL, 'orderby direction', null),
             array('classnameprefix', null, InputOption::VALUE_OPTIONAL, 'prefix for class and file name', null),
             array('classnamesuffix', null, InputOption::VALUE_OPTIONAL, 'suffix for class and file name', null),
-            array('isdelete', null, InputOption::VALUE_NONE, 'delete data before insert', null),
+            array('nodelete', null, InputOption::VALUE_NONE, 'delete data before insert', null),
         );
     }
 
