@@ -66,7 +66,7 @@ Majd a seeder futtatása:
 php artisan db:seed
 ```
 
-#DEFAULT README
+# DEFAULT README
 
 **Inverse seed generator (iSeed)** is a Laravel package that provides a method to generate a new seed file based on data from the existing database table.
 
