@@ -9,7 +9,7 @@ A következő változtatások szükségesek, hogy a zrm-hez készült változtat
 ```json
 "repositories": [
     {
-        "url":  "https://git.tesztszerver.hu/GYOR.NET/iseed",
+        "url":  "https://git.gyor.net/GYOR.NET/iseed",
         "type": "vcs"
     }
 ],
@@ -24,7 +24,7 @@ php ../composer require orangehill/iseed
 ## Új opciók
 
 ### nodelete
-Ezzel a paraméterrel a seeder fájlba nem kerül be a `delete`, mi kitörölné a tábla tartalmát. Használata fontos, hogy a route táblákat le tudjuk kezelni.
+Ezzel a paraméterrel a seeder fájlba nem kerül be a `delete` metódus meghívása, ami kitörölné az adott tábla tartalmát. Használata fontos, hogy a route táblákat le tudjuk kezelni és a különböző suffexelt változatokat tudja mergelni!
 
 ```
 php artisan iseed users --nodelete
@@ -41,10 +41,10 @@ php artisan iseed users --min_id=1000 --max_id=2000
 
 ## Route táblák kezelése
 
-Mindenkinek meghatározott 1000 db-os ID tartománya van a route_menus és a route táblákban, ezek seederét név szerinti suffix használatával kell létrehozni a következőképp:
+Mindenkinek meghatározott 1000 db-os ID tartománya van a `route_menus` és a `routes` táblákban, ezek seederét név szerinti suffix használatával kell létrehozni a következőképp:
 
 ```sh
-php artisan iseed table_menus --classnamesuffix=Roland --min_id=1000 --max_id=2000 --nodelete
+php artisan iseed route_menus --classnamesuffix=Roland --min_id=1000 --max_id=2000 --nodelete
 ```
 
 Ezután a `DatabaseSeeder.php` fájlban található `run` függvény tartalmát a következőre kell módosítani:
