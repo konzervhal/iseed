@@ -1,8 +1,74 @@
-**Inverse seed generator (iSeed)** is a Laravel package that provides a method to generate a new seed file based on data from the existing database table.
+# GYN
 
-[![Build Status](https://travis-ci.org/orangehill/iseed.png)](http://travis-ci.org/orangehill/iseed)
-[![Latest Stable Version](https://poser.pugx.org/orangehill/iseed/v/stable.png)](https://packagist.org/packages/orangehill/iseed) [![Total Downloads](https://poser.pugx.org/orangehill/iseed/downloads.png)](https://packagist.org/packages/orangehill/iseed)
-[![Analytics](https://ga-beacon.appspot.com/UA-1936460-35/iseed?useReferrer&flat)](https://github.com/igrigorik/ga-beacon)
+## Telepítés
+
+A következő változtatások szükségesek, hogy a zrm-hez készült változtatások használhatóak legyenek.
+
+1.: composer.json fájlba kell ez, hogy a GYN verziót töltse majd le:
+
+```json
+"repositories": [
+    {
+        "url":  "https://git.gyor.net/GYOR.NET/iseed",
+        "type": "vcs"
+    }
+],
+```
+
+2.: command - ez letölti innen a gyn gitről a fájlokat. Kérni fogja a git felhasználót + jelszót, ezt igény szerint el is lehet menteni.
+
+```sh
+php ../composer require orangehill/iseed
+```
+
+## Új opciók
+
+### nodelete
+Ezzel a paraméterrel a seeder fájlba nem kerül be a `delete` metódus meghívása, ami kitörölné az adott tábla tartalmát. Használata fontos, hogy a route táblákat le tudjuk kezelni és a különböző suffexelt változatokat tudja mergelni!
+
+```
+php artisan iseed users --nodelete
+```
+
+### min_id / max_id
+Az adott táblában meghatározott minimum és/vagy maximum `id` értéke, hogy bizonyos tartomány kizárható legyen a létrehozandó listából.
+
+pl.: 1000 és 2000 ID közötti userek.
+
+```
+php artisan iseed users --min_id=1000 --max_id=2000
+```
+
+## Route táblák kezelése
+
+Mindenkinek meghatározott 1000 db-os ID tartománya van a `route_menus` és a `routes` táblákban, ezek seederét név szerinti suffix használatával kell létrehozni a következőképp:
+
+```sh
+php artisan iseed route_menus --classnamesuffix=Roland --min_id=1000 --max_id=2000 --nodelete
+```
+
+Ezután a `DatabaseSeeder.php` fájlban található `run` függvény tartalmát a következőre kell módosítani:
+
+```sh
+\Schema::disableForeignKeyConstraints();
+\DB::table('route_menus')->delete();
+\DB::table('routes')->delete();
+$this->call(RoutesTableLacaSeeder::class);
+$this->call(RouteMenusTableLacaSeeder::class);
+$this->call(RoutesTableRolandSeeder::class);
+$this->call(RouteMenusTableRolandSeeder::class);
+\Schema::enableForeignKeyConstraints();
+```
+
+Majd a seeder futtatása:
+
+```sh
+php artisan db:seed
+```
+
+# DEFAULT README
+
+**Inverse seed generator (iSeed)** is a Laravel package that provides a method to generate a new seed file based on data from the existing database table.
 
 ## Installation
 
