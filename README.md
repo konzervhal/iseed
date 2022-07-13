@@ -66,6 +66,13 @@ Majd a seeder futtatása:
 php artisan db:seed
 ```
 
+### --all-tables
+Az adott adatbázisból minden táblából seeder fájlt csinál. Sok tábla esetén célszerű használni a `--classnameprefix` opciót, vagy a meglévő seederfájlokat törölni.
+
+```sh
+php artisan iseed --all-tables --classnameprefix=MindenTabla
+```
+
 # DEFAULT README
 
 **Inverse seed generator (iSeed)** is a Laravel package that provides a method to generate a new seed file based on data from the existing database table.
