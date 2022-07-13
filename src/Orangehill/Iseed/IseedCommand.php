@@ -54,7 +54,12 @@ class IseedCommand extends Command
             app('iseed')->cleanSection();
         }
 
-        $tables = explode(",", $this->argument('tables'));
+        if(trim($this->argument('tables')) === '*') {
+        	$tables = $this->getAllTables();
+        } else {
+        	$tables = explode(",", $this->argument('tables'));
+        }
+
         $max = intval($this->option('max'));
         $min_id = intval($this->option('min_id'));
         $max_id = intval($this->option('max_id'));
@@ -146,6 +151,17 @@ class IseedCommand extends Command
 
         return;
     }
+
+
+    /**
+     * Get all tables from database.
+     *
+     * @return array
+     */
+    protected function getAllTables(){
+    	return \Schema::connection($this->option('database'))->select('SHOW TABLES');
+    }
+
 
     /**
      * Get the console command arguments.
