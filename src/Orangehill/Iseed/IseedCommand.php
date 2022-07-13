@@ -54,7 +54,7 @@ class IseedCommand extends Command
             app('iseed')->cleanSection();
         }
 
-        if(trim($this->argument('tables')) === '*') {
+        if($this->option('all-tables')) {
         	$tables = $this->getAllTables();
         } else {
         	$tables = explode(",", $this->argument('tables'));
@@ -159,7 +159,7 @@ class IseedCommand extends Command
      * @return array
      */
     protected function getAllTables(){
-    	return \Schema::connection($this->option('database'))->select('SHOW TABLES');
+    	return \DB::connection($this->option('database'))->getDoctrineSchemaManager()->listTableNames();
     }
 
 
@@ -200,6 +200,7 @@ class IseedCommand extends Command
             array('classnameprefix', null, InputOption::VALUE_OPTIONAL, 'prefix for class and file name', null),
             array('classnamesuffix', null, InputOption::VALUE_OPTIONAL, 'suffix for class and file name', null),
             array('nodelete', null, InputOption::VALUE_NONE, 'delete data before insert', null),
+            array('all-tables', null, InputOption::VALUE_NONE, 'make seed with all tables', null),
         );
     }
 
