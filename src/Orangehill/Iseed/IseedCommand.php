@@ -5,6 +5,7 @@ namespace Orangehill\Iseed;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Illuminate\Support\Collection;
 
 class IseedCommand extends Command
 {
@@ -159,7 +160,14 @@ class IseedCommand extends Command
      * @return array
      */
     protected function getAllTables(){
-    	return \DB::connection($this->option('database'))->getDoctrineSchemaManager()->listTableNames();
+        $tableprefix = $this->option('table-prefix');
+    	$tables = \DB::connection($this->option('database'))->getDoctrineSchemaManager()->listTableNames();
+        if(strlen(trim($tableprefix))>0) {
+            $tables = collect($tables)->filter(function($item) use($tableprefix) {
+                return strpos($item, $tableprefix) === 0;
+            });
+        }
+        return $tables;
     }
 
 
@@ -171,7 +179,7 @@ class IseedCommand extends Command
     protected function getArguments()
     {
         return array(
-            array('tables', InputArgument::REQUIRED, 'comma separated string of table names'),
+            array('tables', InputArgument::REQUIRED, 'comma separated string of table names')
         );
     }
 
@@ -200,7 +208,8 @@ class IseedCommand extends Command
             array('classnameprefix', null, InputOption::VALUE_OPTIONAL, 'prefix for class and file name', null),
             array('classnamesuffix', null, InputOption::VALUE_OPTIONAL, 'suffix for class and file name', null),
             array('nodelete', null, InputOption::VALUE_NONE, 'delete data before insert', null),
-            array('all-tables', null, InputOption::VALUE_NONE, 'make seed with all tables', null),
+            array('all-tables', null, InputOption::VALUE_NONE, 'make seed with all(or prefixed) tables', null),
+            array('table-prefix', null, InputOption::VALUE_OPTIONAL, 'table name prefix', null)
         );
     }
 
