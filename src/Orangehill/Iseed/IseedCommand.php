@@ -5,6 +5,7 @@ namespace Orangehill\Iseed;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Illuminate\Support\Collection;
 
 class IseedCommand extends Command
@@ -56,9 +57,16 @@ class IseedCommand extends Command
         }
 
         if($this->option('all-tables')) {
-        	$tables = $this->getAllTables();
+            $tables = $this->getAllTables();
         } else {
-        	$tables = explode(",", $this->argument('tables'));
+
+            if(strlen(trim($this->argument('tables'))) > 0) {
+               $tables = explode(",", $this->argument('tables'));
+            }
+            else {
+                throw new InvalidArgumentException("Missing tables argument!");
+            }
+
         }
 
         $max = intval($this->option('max'));
@@ -179,7 +187,7 @@ class IseedCommand extends Command
     protected function getArguments()
     {
         return array(
-            array('tables', InputArgument::REQUIRED, 'comma separated string of table names')
+            array('tables', InputArgument::OPTIONAL, 'comma separated string of table names'),
         );
     }
 
