@@ -83,6 +83,7 @@ class IseedCommand extends Command
         $prefix = $this->option('classnameprefix');
         $suffix = $this->option('classnamesuffix');
         $nodelete = $this->option('nodelete');
+        $nodeleted = $this->options('nodeleted');
 
         if ($max < 1) {
             $max = null;
@@ -120,6 +121,7 @@ class IseedCommand extends Command
                         $min_id,
                         $max_id,
                         $nodelete,
+                        $nodeleted,
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
@@ -146,6 +148,7 @@ class IseedCommand extends Command
                         $min_id,
                         $max_id,
                         $nodelete,
+                        $nodeleted,                        
                         $chunkSize,
                         $exclude,
                         $prerunEvent,
@@ -216,6 +219,7 @@ class IseedCommand extends Command
             array('classnameprefix', null, InputOption::VALUE_OPTIONAL, 'prefix for class and file name', null),
             array('classnamesuffix', null, InputOption::VALUE_OPTIONAL, 'suffix for class and file name', null),
             array('nodelete', null, InputOption::VALUE_NONE, 'delete data before insert', null),
+            array('nodeleted', null, InputOption::VALUE_NONE, 'skip deleted items by deleted_at field', null),
             array('all-tables', null, InputOption::VALUE_NONE, 'make seed with all(or prefixed) tables', null),
             array('table-prefix', null, InputOption::VALUE_OPTIONAL, 'table name prefix', null)
         );

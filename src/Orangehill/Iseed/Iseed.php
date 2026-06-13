@@ -61,7 +61,7 @@ class Iseed
      * @return bool
      * @throws Orangehill\Iseed\TableNotFoundException
      */
-    public function generateSeed($table, $prefix=null, $suffix=null, $database = null, $max = 0, $min_id = 0, $max_id = 0, $nodelete = true, $chunkSize = 0, $exclude = null, $prerunEvent = null, $postrunEvent = null, $dumpAuto = true, $indexed = true, $orderBy = null, $direction = 'ASC')
+    public function generateSeed($table, $prefix=null, $suffix=null, $database = null, $max = 0, $min_id = 0, $max_id = 0, $nodelete = true, $nodeleted = false, $chunkSize = 0, $exclude = null, $prerunEvent = null, $postrunEvent = null, $dumpAuto = true, $indexed = true, $orderBy = null, $direction = 'ASC')
     {
         if (!$database) {
             $database = config('database.default');
@@ -103,6 +103,7 @@ class Iseed
             $postrunEvent,
             $indexed,
             $nodelete,
+            $nodeleted,
         );
 
         // Save a populated stub
@@ -146,6 +147,10 @@ class Iseed
 
         if($min_id) {
             $result = $result->where('id','>=', $min_id);
+        }
+
+        if($nodeleted && in_array("deleted_at", $allColumns)) {
+            $result = $result->whereNull('deleted_at');
         }
 
         if($orderBy) {
