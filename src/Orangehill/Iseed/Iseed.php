@@ -75,7 +75,7 @@ class Iseed
         }
 
         // Get the data
-        $data = $this->getData($table, $max, $min_id, $max_id, $exclude, $orderBy, $direction);
+        $data = $this->getData($table, $max, $min_id, $max_id, $exclude, $orderBy, $direction, $nodeleted);
 
         // Repack the data
         $dataArray = $this->repackSeedData($data);
@@ -132,7 +132,7 @@ class Iseed
      * @param  string $table
      * @return Array
      */
-    public function getData($table, $max, $min_id, $max_id,  $exclude = null, $orderBy = null, $direction = 'ASC')
+    public function getData($table, $max, $min_id, $max_id,  $exclude = null, $orderBy = null, $direction = 'ASC', $nodeleted = false)
     {
         $result = \DB::connection($this->databaseName)->table($table);
 
